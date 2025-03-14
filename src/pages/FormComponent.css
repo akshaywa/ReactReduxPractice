@@ -1,0 +1,14 @@
+.form-component-main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding: 10px;
+}
+
+.form-component-main>div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 4px;
+}
