@@ -9,6 +9,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { textFieldProps } from '../constants/FormConstants';
 import dayjs from "dayjs";
 import './FormComponent.css';
 
@@ -18,6 +19,7 @@ const FormComponent: React.FC = () => {
     const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormState>();
 
     const onSubmit = (data: FormState) => {
+        data.image = selectedImage; // Add selectedImage to FormState.image
         dispatch(updateGlobalState({ key: 'formData', value: data }));
         setTimeout(() => {
             reset();
@@ -37,12 +39,19 @@ const FormComponent: React.FC = () => {
     };
 
 
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='form-component-main'>
-            <div>
-                <TextField label="Student Name" variant="outlined" {...register('studentName', { required: 'Student Name is required' })} />
-                {errors.studentName && <span>{errors.studentName.message}</span>}
-            </div>
+            {textFieldProps.map(({ label, name, required, pattern }) => (
+                <div key={name}>
+                    <TextField
+                        label={label}
+                        variant="outlined"
+                        {...register(name as keyof FormState, { required, pattern })}
+                    />
+                    {errors[name as keyof FormState] && <span>{errors[name as keyof FormState]?.message}</span>}
+                </div>
+            ))}
 
             <div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -64,60 +73,13 @@ const FormComponent: React.FC = () => {
                 </LocalizationProvider>
                 {errors.dob && <span>{errors.dob.message}</span>}
             </div>
-
-            <div>
-                <TextField label="School Name" variant="outlined" {...register('schoolName', { required: 'School Name is required' })} />
-                {errors.schoolName && <span>{errors.schoolName.message}</span>}
-            </div>
-
-            <div>
-                <TextField
-                    label="Roll Number"
-                    variant="outlined"
-                    {...register('rollNumber', {
-                        required: 'Roll Number is required',
-                        pattern: {
-                            value: /^[0-9]+$/,
-                            message: 'Roll Number must be numeric'
-                        }
-                    })}
-                />
-                {errors.rollNumber && <span>{errors.rollNumber.message}</span>}
-            </div>
-
-            <div>
-                <TextField label="Email" variant="outlined" {...register('email', {
-                    required: 'Email is required',
-                    pattern: {
-                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                        message: 'Invalid email address'
-                    }
-                })} />
-                {errors.email && <span>{errors.email.message}</span>}
-            </div>
-
-            <div>
-                <TextField
-                    label="Phone Number"
-                    variant="outlined"
-                    {...register('phoneNumber', {
-                        required: 'Phone Number is required',
-                        pattern: {
-                            value: /^[0-9]+$/,
-                            message: 'Phone Number must be numeric'
-                        }
-                    })}
-                />
-                {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
-            </div>
-
             <div>
                 <input
                     type="file"
                     accept="image/*"
                     {...register('image', {
                         required: 'Image is required',
-                        onChange: (e) => handleImageUpload(e)
+                        onChange: handleImageUpload
                     })}
                 />
                 {errors.image && <span>{errors.image.message}</span>}

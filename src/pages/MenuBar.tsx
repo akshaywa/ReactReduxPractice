@@ -6,9 +6,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router";
 
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['Home', 'StudentList', 'Contact'];
 const MenuBar: React.FC = () => {
+    const navigate = useNavigate();
+    const navigateToItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const item = event.currentTarget.textContent;
+        if (item) {
+            navigate(item.toLowerCase());
+        }
+    };
     return (
         <>
             <AppBar component="nav">
@@ -32,7 +40,7 @@ const MenuBar: React.FC = () => {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
+                            <Button key={item} sx={{ color: '#fff' }} onClick={navigateToItem}>
                                 {item}
                             </Button>
                         ))}

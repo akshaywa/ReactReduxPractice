@@ -5,5 +5,5 @@ export interface FormState {
     rollNumber: number;
     email: string;
     phoneNumber: number;
-    image: FileList;
+    image: string | ArrayBuffer | null;
 }
