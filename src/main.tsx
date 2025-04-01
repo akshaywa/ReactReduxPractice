@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router"
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import router from "./router"
-
+(window as any).global = window;
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>

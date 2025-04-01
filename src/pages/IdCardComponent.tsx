@@ -10,9 +10,9 @@ const IdCardComponent: React.FC<IdCardComponentProps> = ({ formData }) => {
     return (
         <>
             {formData.map((student: any) => (
-                student.studentName && <Card key={student.rollNumber} sx={{ maxWidth: 345 }} className='id-card-component-main'>
+                student.studentName && <Card key={student.rollNumber} sx={{ maxWidth: 300 }} className='id-card-component-main'>
                     <CardMedia
-                        sx={{ height: 140, objectFit: 'contain' }}
+                        sx={{ height: 100, objectFit: 'contain' }}
                         image={student.image}
                         title={student.studentName}
                     />

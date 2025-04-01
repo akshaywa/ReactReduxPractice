@@ -6,6 +6,7 @@ const App = lazy(() => import("./App"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const StudentList = lazy(() => import("./pages/StudentListComponent"));
+const Contact = lazy(() => import("./pages/ContactComponent"));
 
 // Wrapper to add Suspense
 const LazyWrapper = (Component: React.LazyExoticComponent<React.FC>): JSX.Element => {
@@ -24,7 +25,8 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: LazyWrapper(Home) },
       { path: "home", element: LazyWrapper(Home) },
-      { path: "studentList", element: LazyWrapper(StudentList) }
+      { path: "studentList", element: LazyWrapper(StudentList) },
+      { path: "contact", element: LazyWrapper(Contact) }
     ],
   },
   { path: "*", element: LazyWrapper(NotFound) },
