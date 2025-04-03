@@ -29,7 +29,8 @@ const initialGlobalState: GlobalState = {
             phoneNumber: 2345678901,
             image: "https://png.pngtree.com/png-clipart/20190706/original/pngtree-hand-painted-small-fresh-female-high-school-student-png-image_4376790.jpg"
         }
-    ]
+    ],
+    jwtToken: null
 };
 
 export { initialGlobalState };

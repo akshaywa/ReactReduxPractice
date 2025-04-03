@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { JSX, Suspense, lazy } from "react";
+import RedirectToAuthComponent from "./pages/RedirectToAuthComponent";
 
 // Lazy loading components
 const App = lazy(() => import("./App"));
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
     path: "/",
     element: LazyWrapper(App),
     children: [
-      { path: "", element: LazyWrapper(Home) },
+      { path: "/", element: <RedirectToAuthComponent /> },
       { path: "home", element: LazyWrapper(Home) },
       { path: "studentList", element: LazyWrapper(StudentList) },
       { path: "contact", element: LazyWrapper(Contact) }
