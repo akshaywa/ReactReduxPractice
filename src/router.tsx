@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router";
 import { JSX, Suspense, lazy } from "react";
-import RedirectToAuthComponent from "./pages/RedirectToAuthComponent";
 
 // Lazy loading components
 const App = lazy(() => import("./App"));
@@ -8,6 +7,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Home = lazy(() => import("./pages/Home"));
 const StudentList = lazy(() => import("./pages/StudentListComponent"));
 const Contact = lazy(() => import("./pages/ContactComponent"));
+const RedirectToAuthComponent = lazy(() => import("./pages/RedirectToAuthComponent"));
 
 // Wrapper to add Suspense
 const LazyWrapper = (Component: React.LazyExoticComponent<React.FC>): JSX.Element => {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     path: "/",
     element: LazyWrapper(App),
     children: [
-      { path: "/", element: <RedirectToAuthComponent /> },
+      { path: "/", element: LazyWrapper(RedirectToAuthComponent) },
       { path: "home", element: LazyWrapper(Home) },
       { path: "studentList", element: LazyWrapper(StudentList) },
       { path: "contact", element: LazyWrapper(Contact) }
