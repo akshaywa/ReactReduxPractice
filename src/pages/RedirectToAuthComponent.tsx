@@ -10,7 +10,7 @@ const RedirectToAuthComponent: React.FC = () => {
 
     return (
         <div className="redirect-to-auth-container">
-            <Button variant="contained" onClick={loginWithGoogle}>Google Login</Button>
+            <Button variant="contained" size="large" onClick={loginWithGoogle}>Google Login</Button>
         </div>
     );
 };
