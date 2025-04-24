@@ -30,7 +30,14 @@ const initialGlobalState: GlobalState = {
             image: "https://png.pngtree.com/png-clipart/20190706/original/pngtree-hand-painted-small-fresh-female-high-school-student-png-image_4376790.jpg"
         }
     ],
-    jwtToken: null
+    jwtToken: null,
+    decodedToken: {
+        email: "",
+        exp: 0,
+        iat: 0,
+        roles: [],
+        sub: ""
+    }
 };
 
 export { initialGlobalState };

@@ -7,10 +7,12 @@ import IdCardComponent from './IdCardComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import './Home.css';
 import { Navigate } from 'react-router';
+import { jwtDecode } from "jwt-decode";
+
 
 const Home: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { formData, jwtToken } = useSelector((state: any) => state.global);
+    const { formData, jwtToken } = useSelector((state: any) => state?.global);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -22,6 +24,8 @@ const Home: React.FC = () => {
 
                 const jwtToken = response.data.token;
                 dispatch(updateGlobalState({ key: 'jwtToken', value: jwtToken }));
+                const decodedToken: any = jwtDecode(jwtToken);
+                dispatch(updateGlobalState({ key: 'decodedToken', value: decodedToken }));
             } catch (error) {
                 console.error("Error fetching token", error);
             } finally {
