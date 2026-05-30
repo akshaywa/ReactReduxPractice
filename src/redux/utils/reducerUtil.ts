@@ -31,13 +31,7 @@ const initialGlobalState: GlobalState = {
         }
     ],
     jwtToken: null,
-    decodedToken: {
-        email: "",
-        exp: 0,
-        iat: 0,
-        roles: [],
-        sub: ""
-    }
+    decodedToken: null
 };
 
 export { initialGlobalState };

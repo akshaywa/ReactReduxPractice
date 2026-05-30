@@ -16,11 +16,21 @@ import './FormComponent.css';
 const FormComponent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(null);
-    const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormState>();
+    const { control, register, handleSubmit, formState: { errors }, reset } = useForm<FormState>({
+        defaultValues: {
+            studentName: '',
+            dob: new Date(),
+            schoolName: '',
+            rollNumber: 0,
+            email: '',
+            phoneNumber: 0,
+            image: null as any,
+        }
+    });
 
     const onSubmit = (data: FormState) => {
-        data.image = selectedImage; // Add selectedImage to FormState.image
-        dispatch(updateGlobalState({ key: 'formData', value: data }));
+        const payload = { ...data, image: selectedImage };
+        dispatch(updateGlobalState({ key: 'formData', value: payload }));
         setTimeout(() => {
             reset();
             setSelectedImage(null);
@@ -47,15 +57,16 @@ const FormComponent: React.FC = () => {
                     <TextField
                         label={label}
                         variant="outlined"
-                        {...register(name as keyof FormState, { required, pattern })}
+                        {...register(name as keyof FormState, ({ required, pattern, valueAsNumber: name === 'rollNumber' || name === 'phoneNumber' } as any))}
+                        error={!!errors[name as keyof FormState]}
+                        helperText={errors[name as keyof FormState]?.message as string | undefined}
                     />
-                    {errors[name as keyof FormState] && <span>{errors[name as keyof FormState]?.message}</span>}
                 </div>
             ))}
 
             <div>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
+                    <DemoContainer components={["DatePicker"]}>
                         <Controller
                             name="dob"
                             control={control}

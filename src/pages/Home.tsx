@@ -7,8 +7,9 @@ import IdCardComponent from './IdCardComponent';
 import { useSelector, useDispatch } from 'react-redux';
 import './Home.css';
 import { Navigate } from 'react-router';
-import { jwtDecode } from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
+const TOKEN_URL = import.meta.env.VITE_AUTH_TOKEN_URL ?? 'http://localhost:8088/api/auth/token';
 
 const Home: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -18,14 +19,20 @@ const Home: React.FC = () => {
     useEffect(() => {
         const fetchToken = async () => {
             try {
-                const response = await axios.get("http://localhost:8088/api/auth/token", {
+                const response = await axios.get(TOKEN_URL, {
                     withCredentials: true, // Ensures cookies are sent
                 });
 
-                const jwtToken = response.data.token;
-                dispatch(updateGlobalState({ key: 'jwtToken', value: jwtToken }));
-                const decodedToken: any = jwtDecode(jwtToken);
-                dispatch(updateGlobalState({ key: 'decodedToken', value: decodedToken }));
+                const token = response?.data?.token;
+                if (token) {
+                    dispatch(updateGlobalState({ key: 'jwtToken', value: token }));
+                    try {
+                        const decodedToken: any = jwt_decode(token);
+                        dispatch(updateGlobalState({ key: 'decodedToken', value: decodedToken }));
+                    } catch (err) {
+                        console.error('Failed to decode token', err);
+                    }
+                }
             } catch (error) {
                 console.error("Error fetching token", error);
             } finally {

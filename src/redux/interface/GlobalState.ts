@@ -5,5 +5,5 @@ export interface GlobalState {
     formData: FormState;
     studentData: FormState[];
     jwtToken: string | null;
-    decodedToken: DecodedToken;
+    decodedToken: DecodedToken | null;
 }

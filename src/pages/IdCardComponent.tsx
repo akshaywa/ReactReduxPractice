@@ -10,22 +10,22 @@ const IdCardComponent: React.FC<IdCardComponentProps> = ({ formData }) => {
     return (
         <>
             {formData.map((student: any) => (
-                student.studentName && <Card key={student.rollNumber} sx={{ maxWidth: 300 }} className='id-card-component-main'>
+                student?.studentName && <Card key={student?.rollNumber ?? student?.email ?? Math.random()} sx={{ maxWidth: 300 }} className='id-card-component-main'>
                     <CardMedia
                         sx={{ height: 100, objectFit: 'contain' }}
-                        image={student.image}
-                        title={student.studentName}
+                        image={String(student?.image ?? '')}
+                        title={student?.studentName ?? 'Student'}
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                            {student.studentName}
+                            {student?.studentName}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            <Typography variant="body2">DOB: {student.dob.toString()}</Typography>
-                            <Typography variant="body2">School Name: {student.schoolName}</Typography>
-                            <Typography variant="body2">Roll Number: {student.rollNumber}</Typography>
-                            <Typography variant="body2">Email: {student.email}</Typography>
-                            <Typography variant="body2">Phone Number: {student.phoneNumber}</Typography>
+                            <Typography variant="body2">DOB: {student?.dob ? new Date(student.dob).toDateString() : 'N/A'}</Typography>
+                            <Typography variant="body2">School Name: {student?.schoolName ?? 'N/A'}</Typography>
+                            <Typography variant="body2">Roll Number: {student?.rollNumber ?? 'N/A'}</Typography>
+                            <Typography variant="body2">Email: {student?.email ?? 'N/A'}</Typography>
+                            <Typography variant="body2">Phone Number: {student?.phoneNumber ?? 'N/A'}</Typography>
                         </Typography>
                     </CardContent>
                 </Card>

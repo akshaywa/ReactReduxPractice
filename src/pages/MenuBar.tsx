@@ -6,14 +6,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 
 const MenuBar: React.FC = () => {
     const navigate = useNavigate();
-    const { decodedToken } = useSelector((state: any) => state?.global);
-    const navItems = decodedToken.roles.includes("ROLE_ADMIN") ? ['Home', 'StudentList', 'Contact'] : ['Home', 'StudentList'];
+    const { decodedToken } = useSelector((state: any) => state?.global || {});
+    const roles: string[] = decodedToken?.roles ?? [];
+    const navItems = roles.includes("ROLE_ADMIN") ? ['Home', 'StudentList', 'Contact'] : ['Home', 'StudentList'];
     const navigateToItem = (event: React.MouseEvent<HTMLButtonElement>) => {
         const item = event.currentTarget.textContent;
         if (item) {

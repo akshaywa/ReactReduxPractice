@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 import MenuBar from "./pages/MenuBar";
 import './App.css';
 const App: React.FC = () => {
